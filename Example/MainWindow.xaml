@@ -2,13 +2,13 @@
     x:Class="Example.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:System="clr-namespace:System;assembly=System.Runtime"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Example"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:System="clr-namespace:System;assembly=System.Runtime"
     Title="MainWindow"
-    Width="1000"
-    Height="450"
+    Width="1280"
+    Height="740"
     mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
@@ -16,91 +16,373 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <ListView Margin="345,10,10,10" ItemsSource="{Binding Employees}">
+        <TextBlock Margin="10,10,650,370" Text="Список фильмов" />
+
+        <ListView
+            Margin="10,25.96,675,370"
+            ItemsSource="{Binding Movies}"
+            SelectedItem="{Binding SelectedMovie}">
+
             <ListView.View>
                 <GridView>
                     <GridViewColumn
-                        Width="150"
+                        Width="175"
                         DisplayMemberBinding="{Binding Name}"
-                        Header="Название дисциплины" />
+                        Header="Название" />
                     <GridViewColumn
                         Width="100"
-                        DisplayMemberBinding="{Binding PrepodName}"
-                        Header="Преподователь" />
+                        DisplayMemberBinding="{Binding Type}"
+                        Header="Жанр" />
                     <GridViewColumn
-                        Width="80"
-                        DisplayMemberBinding="{Binding Difficultu}"
-                        Header="Сложность" />
+                        Width="110"
+                        DisplayMemberBinding="{Binding Director}"
+                        Header="Режиссёр" />
                     <GridViewColumn
-                        Width="150"
-                        DisplayMemberBinding="{Binding SelectedDate}"
-                        Header="Дата" />
+                        Width="100"
+                        DisplayMemberBinding="{Binding Start}"
+                        Header="Год" />
                     <GridViewColumn
                         Width="140"
-                        DisplayMemberBinding="{Binding DateOfStartWork}"
-                        Header="Дата начала подготовки" />
+                        DisplayMemberBinding="{Binding Raiting}"
+                        Header="Рейтинг" />
                 </GridView>
             </ListView.View>
         </ListView>
-        <StackPanel Margin="10,4,650,4" DataContext="{Binding NewEmployee}">
-            <TextBlock Text="Добавить нового сотрудника" />
-            <TextBlock
-                Width="260"
-                Height="19"
-                Text="Название дисциплины" />
-            <TextBox
-                Width="315"
-                Height="30"
-                Text="{Binding Name}" />
-            <TextBlock
-                Width="260"
-                Height="19"
-                Text="Преподователь" />
-            <TextBox
-                Width="315"
-                Height="30"
-                Text="{Binding PrepodName}" />
-            <TextBlock
-                Width="260"
-                Height="19"
-                Text="Уровень сложности" />
-            <ComboBox
-                Width="315"
-                Height="30"
-                SelectedIndex="0"
-                Text="{Binding Difficultu}">
-                <ComboBoxItem Content="Легко" />
-                <ComboBoxItem Content="Сложно" />
-                <ComboBoxItem Content="Невозможно" />
-            </ComboBox>
-            <TextBlock
-                Width="260"
-                Height="19"
-                Text="Дата зачета или экзамена" />
-            <DatePicker
-                Width="315"
-                Height="30"
-                DisplayDate="2019-01-01"
-                SelectedDate="{Binding SelectedDate}"
-                SelectedDateFormat="Short" />
-        </StackPanel>
-        <StackPanel Margin="10,300,650,4">
 
-            <Button
-                Width="160"
-                Height="28"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Top"
-                Command="{Binding AddCommand}"
-                Content="Добавить" />
-            <Button
-                Width="160"
-                Height="28"
-                Margin="0,25,0,0"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Bottom"
-                Command="{Binding RemoveCommand}"
-                Content="Удалить" />
+
+        <!--  НАЧАЛО 2222222222  -->
+        <StackPanel Margin="650,10,10,370">
+
+            <TextBlock Text="Добавить новый фильм в коллекцию" />
+
+            <StackPanel Margin="0,10,380,0">
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="Margin" Value="0,15,0,0" />
+                    </Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Margin" Value="0,10,0,0" />
+                    </Style>
+                </StackPanel.Resources>
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontSize="16"
+                    Text="Название фильма" />
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontSize="16"
+                    Text="Жанр" />
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontSize="16"
+                    Text="Год выпуска" />
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontSize="16"
+                    Text="Режиссер" />
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontSize="16"
+                    Text="Рейтинг" />
+                <Button
+                    Width="220"
+                    Height="21.28"
+                    HorizontalAlignment="Center"
+                    Command="{Binding AddCommand}"
+                    Content="Добавить" />
+                <Button
+                    Width="220"
+                    Height="21.28"
+                    HorizontalAlignment="Center"
+                    Command="{Binding ShowallCommand}"
+                    Content="Показать все" />
+
+
+
+            </StackPanel>
+
+            <StackPanel Margin="255,-243.96,0,0" DataContext="{Binding NewMovie}">
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type TextBox}">
+                        <Setter Property="Margin" Value="0,15,0,0" />
+                    </Style>
+                    <Style TargetType="{x:Type ComboBox}">
+                        <Setter Property="Margin" Value="0,15,0,0" />
+                    </Style>
+
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Margin" Value="0,10,0,0" />
+                    </Style>
+                </StackPanel.Resources>
+
+                <TextBox
+                    Width="315"
+                    Height="21.28"
+                    Text="{Binding Name}" />
+                <ComboBox
+                    Width="315"
+                    Height="21.28"
+                    ItemsSource="{Binding Types}"
+                    Text="{Binding Type}">
+                    <ComboBoxItem Content="Ужас" />
+                    <ComboBoxItem Content="Драма" />
+                    <ComboBoxItem Content="Комедия" />
+                </ComboBox>
+
+
+                <TextBox
+                    Width="315"
+                    Height="21.28"
+                    Text="{Binding Start}" />
+                <TextBox
+                    Width="315"
+                    Height="21.28"
+                    Text="{Binding Director}" />
+                <TextBox
+                    Width="315"
+                    Height="21.28"
+                    Text="{Binding Raiting}" />
+
+            </StackPanel>
+
+            <StackPanel Margin="255,-67.56,0,0">
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type TextBox}">
+                        <Setter Property="Margin" Value="0,15,0,0" />
+                    </Style>
+                    <Style TargetType="{x:Type ComboBox}">
+                        <Setter Property="Margin" Value="0,15,0,0" />
+                    </Style>
+
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Margin" Value="0,15,0,0" />
+                    </Style>
+                </StackPanel.Resources>
+                <Button
+                    Width="315"
+                    Height="21.28"
+                    HorizontalAlignment="Center"
+                    Command="{Binding RemoveCommand}"
+                    Content="Удалить" />
+            </StackPanel>
+
         </StackPanel>
+
+
+        <!--  КОНЕЦ 222222222222222  -->
+
+
+
+        <!--  НАЧАЛО 333333333333333  -->
+        <StackPanel Margin="10,370,650,10">
+            <TextBlock Text="Посик и сортировка" />
+            <StackPanel Margin="0,10,380,0">
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="Margin" Value="0,51.28,0,0" />
+                    </Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Margin" Value="0,10,0,0" />
+                    </Style>
+                </StackPanel.Resources>
+                <TextBlock
+                    Margin="0,0,0,0"
+                    HorizontalAlignment="Center"
+                    FontSize="16"
+                    Text="Выберите жанр:" />
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontSize="16"
+                    Text="Поиск по дате релиза:" />
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontSize="16"
+                    Text="Сортировак по рейтингу:" />
+
+            </StackPanel>
+
+            <StackPanel Margin="280,-176.4,0,0">
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type TextBox}">
+                        <Setter Property="Margin" Value="0,10,0,0" />
+                    </Style>
+                    <Style TargetType="{x:Type ComboBox}">
+                        <Setter Property="Margin" Value="0,15,0,0" />
+                    </Style>
+
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Margin" Value="0,15,0,0" />
+                    </Style>
+                </StackPanel.Resources>
+                <ComboBox
+                    Width="315"
+                    Height="21.28"
+                    HorizontalAlignment="Left"
+                    ItemsSource="{Binding Types}"
+                    SelectedItem="{Binding _selectedtype}" />
+                <Button
+                    Width="315"
+                    Height="21.28"
+                    HorizontalAlignment="Left"
+                    Command="{Binding SortByType}"
+                    Content="Поиск по жанру" />
+                <TextBox
+                    Width="147.5"
+                    Height="21.28"
+                    Margin="0,15,0,0"
+                    HorizontalAlignment="Left"
+                    Text="{Binding _selectedstart}" />
+                <TextBox
+                    Width="147.5"
+                    Height="21.28"
+                    Margin="167.5,-21.28,0,0"
+                    HorizontalAlignment="Left"
+                    Text="{Binding _selectedend}" />
+                <!--  ДЛЯ СОЗДАНИЕ КНОПОК В ЛИНИЮ  -->
+
+                <!--<StackPanel Margin="25,0,0,0">
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type TextBox}">
+                            <Setter Property="Margin" Value="0,15,0,0" />
+                        </Style>
+                    </StackPanel.Resources>
+                    <TextBox
+                        Width="147.5"
+                        Height="21.28"
+                        HorizontalAlignment="Left"
+                        Text="{Binding Name}" />
+
+                </StackPanel>
+
+                <StackPanel Margin="192.5,-36.28,0,0">
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type TextBox}">
+                            <Setter Property="Margin" Value="0,15,0,0" />
+                        </Style>
+                        <Style TargetType="{x:Type ComboBox}">
+                            <Setter Property="Margin" Value="0,15,0,0" />
+                        </Style>
+
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Margin" Value="0,10,0,0" />
+                        </Style>
+                    </StackPanel.Resources>
+                    <TextBox
+                        Width="147.5"
+                        Height="21.28"
+                        Text="{Binding Name}" />
+
+                </StackPanel>-->
+
+                <!--  ДЛЯ СОЗДАНИЕ КНОПОК В ЛИНИЮ   КООООООООООООНЕЕЕЕЕЕЕЕЕЦЦЦ  -->
+
+                <Button
+                    Width="315"
+                    Height="21.28"
+                    HorizontalAlignment="Left"
+                    Command="{Binding SortByRange}"
+                    Content="Посик по дате релиза" />
+
+                <!--<StackPanel Margin="0,0,0,0">
+                    <StackPanel.Resources>
+
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Margin" Value="0,15,0,0" />
+                        </Style>
+                    </StackPanel.Resources>
+                    <Button
+                        Width="147.5"
+                        Height="21.28"
+                        HorizontalAlignment="Left"
+                        Command="{Binding SortByMinToMax}"
+                        Content="По возрастанию" />
+
+                </StackPanel>
+
+                <StackPanel Margin="167.5,-36.28,0,0">
+                    <StackPanel.Resources>
+                        <Style TargetType="{x:Type TextBox}">
+                            <Setter Property="Margin" Value="0,15,0,0" />
+                        </Style>
+                        <Style TargetType="{x:Type ComboBox}">
+                            <Setter Property="Margin" Value="0,15,0,0" />
+                        </Style>
+
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Margin" Value="0,15,0,0" />
+                        </Style>
+                    </StackPanel.Resources>
+
+                    <Button
+                        Width="147.5"
+                        Height="21.28"
+                        HorizontalAlignment="Left"
+                        Command="{Binding SortByMaxToMin}"
+                        Content="По убыванию" />
+                </StackPanel>-->
+
+                <Button
+                    Width="147.5"
+                    Height="21.28"
+                    Margin="0,15,0,0"
+                    HorizontalAlignment="Left"
+                    Command="{Binding SortByMinToMax}"
+                    Content="По возрастанию" />
+                <Button
+                    Width="147.5"
+                    Height="21.28"
+                    Margin="167.5,-21.28,0,0"
+                    HorizontalAlignment="Left"
+                    Command="{Binding SortByMaxToMin}"
+                    Content="По убыванию" />
+
+            </StackPanel>
+        </StackPanel>
+
+        <!--  КОНЕЦ 333333333333333  -->
+
+
+
+        <!--  НАЧАЛО 444444444444444444  -->
+
+
+
+        <TextBlock Margin="650,370,10,250" Text="Список фильмов" />
+        <ListView Margin="650,386,33,182" ItemsSource="{Binding Directors}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn
+                        Width="120"
+                        DisplayMemberBinding="{Binding FullName}"
+                        Header="ФИО" />
+                    <GridViewColumn
+                        Width="125"
+                        DisplayMemberBinding="{Binding Count}"
+                        Header="Количесиво фильмов" />
+                    <GridViewColumn
+                        Width="110"
+                        DisplayMemberBinding="{Binding AVGRairind}"
+                        Header="Средний рейтинг" />
+                    <GridViewColumn
+                        Width="130"
+                        DisplayMemberBinding="{Binding StartYear}"
+                        Header="Год начала активности" />
+                    <GridViewColumn
+                        Width="130"
+                        DisplayMemberBinding="{Binding EndYear}"
+                        Header="Год конца активности" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button
+            Width="597"
+            Height="21.28"
+            Margin="650,542,0,161"
+            HorizontalAlignment="Left"
+            Command="{Binding ShowAllDirectors}"
+            Content="Сформировать список" />
+
+        <!--  КОНЕЦ 444444444444444444  -->
+
     </Grid>
 </Window>

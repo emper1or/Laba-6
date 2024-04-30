@@ -28,5 +28,6 @@ namespace Example
             InitializeComponent();
             DataContext = new ViewModel1();
         }
+
     }
 }
